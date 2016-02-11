@@ -1,0 +1,19 @@
+web:
+    image: talklish/php7
+    restart: always
+	environment:
+		- DEBUG=1
+		- NGINX_APP_PATH=/opt/app
+		- NGINX_SERVER_NAME=php
+    ports:
+        - "80:80" # web
+        - "2222:22" # ssh
+        - "35729:35729" # live reload
+        - "9876:9876" # karma server
+    volumes:
+        - ~/.composer:/home/talklish/.composer # composer caching
+        - ~/.gitconfig:/home/talklish/.gitconfig # Git configuration ( access alias && config )
+        - ~/.ssh:/home/talklish/.ssh # Ssh keys for easy deployment inside the container
+        - ~/apps:/apps # all apps
+        - ~/apps/volumes/nginx/sites-available:/etc/nginx/sites-available # nginx sites ( in case you recreate the container )
+        - ~/apps/volumes/nginx/sites-enabled:/etc/nginx/sites-enabled # nginx sites ( in case you recreate the container )
